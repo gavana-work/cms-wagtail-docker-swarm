@@ -1,0 +1,238 @@
+version: "3.8"
+
+#defaults
+########################################################################
+
+x-default-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: 10m
+
+x-default-restart_policy: &default-restart_policy
+  condition: any
+  delay: 5s
+  max_attempts: 3
+  window: 120s
+
+secrets:
+  #-------------------------------------------------------------------
+  #app
+  #-------------------------------------------------------------------
+  HTTP_WORKER_THREADS:
+    external: true
+  DJANGO_DOCKER_HOSTS:
+    external: true
+  DJANGO_LOG_LEVEL:
+    external: true
+  DJANGO_TIMEZONE:
+    external: true
+  DJANGO_PORT:
+    external: true
+  DJANGO_SEC_KEY:
+    external: true
+  DJANGO_EMAIL_USER:
+    external: true
+  DJANGO_EMAIL_PORT:
+    external: true
+  DJANGO_EMAIL_HOST:
+    external: true
+  DJANGO_CACHE:
+    external: true
+  DJANGO_CACHE_HOST:
+    external: true
+  DJANGO_CACHE_PORT:
+    external: true
+  DJANGO_DB_ENGINE:
+    external: true
+  DJANGO_DB_HOST:
+    external: true
+  DJANGO_DB_USER:
+    external: true
+  DJANGO_DB_PASS:
+    external: true
+  DJANGO_DB_NAME:
+    external: true
+  DJANGO_DB_PORT:
+    external: true
+  #-------------------------------------------------------------------
+  #db
+  #-------------------------------------------------------------------
+  POSTGRES_USER:
+    external: true
+  POSTGRES_PASSWORD:
+    external: true
+  POSTGRES_DB:
+    external: true
+  APP_USER:
+    external: true
+  APP_USER_PASSWORD:
+    external: true
+  APP_DB:
+    external: true
+  #-------------------------------------------------------------------
+  #mail
+  #-------------------------------------------------------------------
+  SMTP_PASSWORD:
+    external: true
+
+x-app-secrets: &app-secrets
+  - HTTP_WORKER_THREADS
+  - DJANGO_DOCKER_HOSTS
+  - DJANGO_LOG_LEVEL
+  - DJANGO_TIMEZONE
+  - DJANGO_PORT
+  - DJANGO_SEC_KEY
+  - DJANGO_EMAIL_USER
+  - DJANGO_EMAIL_PORT
+  - DJANGO_EMAIL_HOST
+  - DJANGO_CACHE
+  - DJANGO_CACHE_HOST
+  - DJANGO_CACHE_PORT
+  - DJANGO_DB_ENGINE
+  - DJANGO_DB_HOST
+  - DJANGO_DB_USER
+  - DJANGO_DB_PASS
+  - DJANGO_DB_NAME
+  - DJANGO_DB_PORT
+
+x-db-secrets: &db-secrets
+  - POSTGRES_USER
+  - POSTGRES_PASSWORD
+  - POSTGRES_DB
+  - APP_USER
+  - APP_USER_PASSWORD
+  - APP_DB
+
+x-mail-secrets: &mail-secrets 
+  - SMTP_PASSWORD
+
+x-db-environment: &db-environment
+  POSTGRES_USER_FILE: "/run/secrets/POSTGRES_USER"
+  POSTGRES_PASSWORD_FILE: "/run/secrets/POSTGRES_PASSWORD"
+  POSTGRES_DB_FILE: "/run/secrets/POSTGRES_DB"
+
+#variables
+########################################################################
+
+x-fe-environment: &fe-environment
+  LOG_RETENTION: "false"
+
+x-app-environment: &app-environment
+  SITE_TITLE: "My Site"
+  SITE_FOOTER: 'Thanks for checking out My Site. Maybe consider visiting some of my social media accounts for more good stuff.'
+  A_SITE_NAV_SLUG: "home"
+  A_SITE_NAV_TITLE: "Home"
+  B_SITE_NAV_SLUG: "blog"
+  B_SITE_NAV_TITLE: "Blog"
+  C_SITE_NAV_SLUG: "archive"
+  C_SITE_NAV_TITLE: "Archive"
+  D_SITE_NAV_SLUG: "resume"
+  D_SITE_NAV_TITLE: "Resume"
+  E_SITE_NAV_SLUG: "contact"
+  E_SITE_NAV_TITLE: "Contact"
+  LINK_GITHUB: "https://github.com"
+  LINK_TELEGRAM: "https://telegram.org/"
+  LINK_YOUTUBE: "https://youtube.com"
+
+x-mail-environment: &mail-environment
+  SMTP_USERNAME: "youremailhere@gmail.com"
+  RELAY_TO_USERS: "youremailhere@gmail.com"
+  RELAY_TO_HOSTS: "smtp.gmail.com"
+  RELAY_FROM_HOSTS: "10.0.0.0/8"
+  SMARTHOST: "smtp.gmail.com::587"
+
+#main
+########################################################################
+
+services:
+
+  fe:
+    image: nginx-custom:latest
+    volumes:
+      - "/opt/docker-stacks/blog/persistance/shared/security/letsencrypt/etc/live/domain.ext/fullchain.pem:/etc/nginx/ssl/app.crt"
+      - "/opt/docker-stacks/blog/persistance/shared/security/letsencrypt/etc/live/domain.ext/privkey.pem:/etc/nginx/ssl/app.key"
+      - "/opt/docker-stacks/blog/persistance/shared/security/letsencrypt/etc/live/domain.ext/chain.pem:/etc/nginx/ssl/ca.crt"
+      - "/opt/docker-stacks/blog/persistance/shared/static:/static"
+      - "/opt/docker-stacks/blog/persistance/shared/media:/media"
+      - "/opt/docker-stacks/blog/persistance/fe/logs:/etc/nginx/logs"
+    ports:
+      - "443:8443"
+      - "80:8080"
+    user: nginx
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy: *default-restart_policy
+      resources:
+        limits:
+          memory: 256M
+    logging: *default-logging
+    environment: *fe-environment
+
+  app:
+    image: wagtail-custom:latest
+    volumes:
+      - "/opt/docker-stacks/blog/persistance/shared/security/letsencrypt/etc/live/domain.ext/fullchain.pem:/app/security/app.crt"
+      - "/opt/docker-stacks/blog/persistance/shared/security/letsencrypt/etc/live/domain.ext/privkey.pem:/app/security/app.key"
+      - "/opt/docker-stacks/blog/persistance/shared/security/letsencrypt/etc/live/domain.ext/chain.pem:/app/security/ca.crt"
+      - "/opt/docker-stacks/blog/persistance/app/img/error-page.jpg:/app/service/base/static/img/error-page.jpg"
+      - "/opt/docker-stacks/blog/persistance/app/img/favicon.ico:/app/service/base/static/img/favicon.ico"
+      - "/opt/docker-stacks/blog/persistance/shared/static:/static"
+      - "/opt/docker-stacks/blog/persistance/shared/media:/media"
+    user: app
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy: *default-restart_policy
+      resources:
+        limits:
+          memory: 512M
+    logging: *default-logging
+    environment: *app-environment
+    secrets: *app-secrets
+
+  db:
+    image: postgres-custom:latest
+    volumes:
+      - "/opt/docker-stacks/blog/persistance/db/data:/var/lib/postgresql/data"
+    user: postgres
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy: *default-restart_policy
+      resources:
+        limits:
+          memory: 512M
+    logging: *default-logging
+    environment: *db-environment
+    secrets: *db-secrets
+
+  cache:
+    image: redis-custom:latest
+    volumes:
+      - "/opt/docker-stacks/blog/persistance/cache/data:/data"
+    user: redis
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy: *default-restart_policy
+      resources:
+        limits:
+          memory: 256M
+    logging: *default-logging
+
+  mail:
+    image: smtp-custom:latest
+    ports:
+      - "25:8025"
+    user: exim
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy: *default-restart_policy
+      resources:
+        limits:
+          memory: 128M
+    logging: *default-logging
+    environment: *mail-environment
+    secrets: *mail-secrets

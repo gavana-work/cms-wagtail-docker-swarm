@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags blogapp_tags %}
+
+{% block meta_title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock meta_title %}
+{% block meta_description %}{% if self.search_description %}{{ self.search_description }}{% else %}{{ self.body|striptags|truncatewords:20 }}{% endif %}{% endblock meta_description %}
+{% block canonical %}{% canonical_url self%}{% endblock canonical %}
+
+{% block content %}
+
+<!-- Page Header -->
+{% image self.image original as img %}
+<header class="masthead" style="background-image: url({{ img.url }});">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>{{ self.title }}</h1>
+          <span class="subheading">{{ self.subtitle }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<div class="container">
+  <div class="row">
+
+    {% if blog_page.search_term %}
+      <header class="page-header">
+          <h1 class="page-title">Search results for <span>{{ blog_page.search_type }}: {{ blog_page.search_term }}</span></h1>
+      </header>
+    {% endif %}
+
+    <div class="col-lg-8">
+      <p>
+        <i class="far fa-clock footer-icon"></i> {{post.date}} &nbsp;
+        <i class="far fa-user footer-icon"></i> {{post.owner}} &nbsp;
+        {% post_categories %}
+      </p>
+      <hr>
+      {{ post.body }}
+      {% post_tags_list %}
+    </div>
+
+    {% include 'blog/components/sidebar.html' %}
+
+  </div>
+</div>
+
+{% endblock %}

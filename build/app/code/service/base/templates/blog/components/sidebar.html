@@ -1,0 +1,29 @@
+{% load static wagtailcore_tags wagtailimages_tags blogapp_tags wagtailroutablepage_tags %}
+
+<div class="col-md-4">
+
+    <!-- Search Widget -->
+    <div class="card mb-4">
+      <h5 class="card-header">Search</h5>
+      <div class="card-body">
+        <form role="search" method="get" class="form-search" action="{% routablepageurl blog_page "post_search" %}" method="get">
+
+          <div class="input-group floating-label-form-group controls">
+
+            <input type="text" class="form-control search-query form-extra" name="q" placeholder="Search&hellip;" title="Search for:" style="text-align:left;" />
+
+            <span class="input-group-btn">
+              <button class="btn btn-primary btn-extra" type="button">Go!</button>
+            </span>
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    {% categories_list %}
+
+    {% tags_list %}
+
+</div>

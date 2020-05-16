@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags wagtailimages_tags widget_tweaks %}
+
+{% block content %}
+
+<!-- Page Header -->
+{% image self.image original as img %}
+<header class="masthead" style="background-image: url({{ img.url }});">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>{{ self.title }}</h1>
+          <span class="subheading">{{ self.subtitle }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+
+      <form action="{% pageurl page %}" method="POST" name="sentMessage" id="contactForm">
+          
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+              {% for error in form.non_field_errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% for field in form.visible_fields %}
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>{{ field.label }}</label>
+                {% if field.label|stringformat:"s" == "Name" %}
+                  {% render_field field style="text-align:left;" id+="name" class+="form-control form-extra" type+="text" placeholder+="Name" data-validation-required-message+="Please enter your message." %}
+                {% endif %}
+                {% if field.label|stringformat:"s" == "Email Address" %}
+                  {% render_field field style="text-align:left;" id+="email" class+="form-control form-extra" type+="email" placeholder+="Email Address" data-validation-required-message+="Please enter your email address." aria-invalid="false" %}
+                {% endif %}
+                {% if field.label|stringformat:"s" == "Message" %}
+                  {% render_field field id+="message" class+="form-control form-extra" placeholder+=" Message" data-validation-required-message+="Please enter your message." %}
+                {% endif %}
+                <p class="help-block text-danger"></p>  
+              </div>
+            </div>
+          {% endfor %}
+
+          <br>
+          <div id="success"></div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
+          </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

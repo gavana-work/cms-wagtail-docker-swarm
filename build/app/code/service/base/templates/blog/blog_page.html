@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags wagtailimages_tags blogapp_tags el_pagination_tags %}
+
+{% block content %}
+
+<!-- Page Header -->
+{% image self.image original as img %}
+<header class="masthead" style="background-image: url({{ img.url }});">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>{{ self.title }}</h1>
+          <span class="subheading">{{ self.subtitle }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- Body -->
+{% if blog_page.body %}
+  <div class="container">
+    <div class="row">
+
+      <div class="col-lg-12">
+        {{ self.body }}
+        <hr>
+      </div>
+
+    </div>
+  </div>
+{% endif %}
+
+<!-- Posts -->
+<div class="container">
+  <div class="row">
+
+      <div class="col-lg-8">
+        
+        {% if blog_page.search_term %}
+          <header class="page-header">
+              <h1 class="page-title">Search results for <span>: {{ blog_page.search_term }}</span></h1>
+          </header>
+        {% endif %}
+
+        {% paginate 5 posts %}
+        {% for post in posts %}
+          <!-- Blog Post -->
+          <div class="card mb-4">
+
+            {% if post.image %}
+                {% image post.image original as image %}
+                <a href="{% post_date_url post blog_page %}">
+                  <img src="{{ image.url }}" class="card-img-top" ></img>
+                </a>
+            {% endif %}
+
+            <div class="card-body">
+              <h2 class="card-title">
+                <a href="{% post_date_url post blog_page %}">{{ post.title }}</a>
+              </h2>
+              <p class="card-text">
+                {% if post.excerpt %}
+                    {{ post.excerpt }}
+                {% else %}
+                    {{ post.body|truncatewords_html:70 }}
+                {% endif %}
+              </p>
+              <a href="{% post_date_url post blog_page %}" class="btn btn-primary">Read More &rarr;</a>
+            </div>
+
+            <div class="card-footer small">
+              {{ post.date }}
+            </div>
+
+          </div>
+
+        {% endfor %}
+      
+      </div>
+
+      {% include 'blog/components/sidebar.html' %}
+
+  </div>
+</div>
+
+
+<!-- Pagination -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8">
+
+      {% get_pages %}
+      <ul class="pagination">
+      {% if pages.paginated %}
+        <li class="page-item">
+          <a class="page-link page-first" href="{{ pages.first.path }}" aria-label="First">
+            <span aria-hidden="true">&lt;&lt;</span>
+            <span class="sr-only">First</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="{{ pages.previous.path }}" aria-label="Previous">
+            <span aria-hidden="true">&lt;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        {% for page in pages %}
+          {% if page == None %}
+            <li class="page-item disabled">
+              <a class="page-link" href="#" aria-label="...">
+                <span aria-hidden="true">...</span>
+                <span class="sr-only">...</span>
+              </a>
+            </li>
+          {% else %}
+            <li class="page-item {% if page.is_current %} active {% endif %}">
+              <a class="page-link" href="{{ page.path }}" aria-label="Page {{page.number}}">
+                <span aria-hidden="true">{{ page.label|safe }}</span>
+                <span class="sr-only">Page {{page.number}}</span>
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        <li class="page-item">
+          <a class="page-link" href="{{ pages.next.path }}" aria-label="Next">
+            <span aria-hidden="true">&gt;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link page-last" href="{{ pages.last.path }}" aria-label="Last">
+            <span aria-hidden="true">&gt;&gt;</span>
+            <span class="sr-only">Last</span>
+          </a>
+        </li>
+      {% endif %}
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

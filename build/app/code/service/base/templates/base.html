@@ -1,0 +1,148 @@
+{% load static wagtailcore_tags wagtailimages_tags blogapp_tags infoapp_tags el_pagination_tags %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+
+    <!-- main -->
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>
+            {% block title %}
+                {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>        
+
+        <!-- icon setting -->
+        <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+        <!-- bootstrap core -->
+        <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <!-- glphycons -->
+        <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+        <!-- headings text -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+        <!-- all other text -->
+        <link href="https://fonts.googleapis.com/css2?family=Muli:ital,wght@0,200;0,300;0,400;0,700;1,200;1,300;1,400;1,700&display=swap" rel="stylesheet"> 
+        <!-- main styles -->
+        <link href="{% static 'css/clean-blog.min.css' %}" rel="stylesheet">
+        <!-- code syntax blocks -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/prism.css' %}">
+
+    </head>
+    <body class="{% block body_class %}{% endblock %}">
+
+
+      <!-- navigation menu -->
+      <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+          <a class="navbar-brand">SITE_TITLE</a>
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% slugurl 'A_SITE_NAV_SLUG' %}">A_SITE_NAV_TITLE</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% slugurl 'B_SITE_NAV_SLUG' %}">B_SITE_NAV_TITLE</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% slugurl 'C_SITE_NAV_SLUG' %}">C_SITE_NAV_TITLE</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% slugurl 'D_SITE_NAV_SLUG' %}">D_SITE_NAV_TITLE</a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% slugurl 'E_SITE_NAV_SLUG' %}">E_SITE_NAV_TITLE</a>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+      <!-- each unique page is placed here -->
+      <main role="main">
+        {% block content %}
+        {% endblock content %}
+      </main>
+
+
+      <hr>
+      <!-- footer -->
+      <!-- the links are handled as environment variables -->
+      <footer>
+          <div class="container" role="contentinfo">
+            <div class="row">
+              <div class="col-lg-8 col-md-10 mx-auto">
+                <ul class="list-inline text-center">
+
+                  <li class="list-inline-item">
+                    <a href="LINK_GITHUB">
+                      <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-github fa-stack-1x fa-inverse footer-icon"></i>
+                      </span>
+                    </a>
+                  </li>
+
+                  <li class="list-inline-item">
+                    <a href="LINK_TELEGRAM" target="_blank">
+                      <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-telegram-plane fa-stack-1x fa-inverse footer-icon"></i>
+                      </span>
+                    </a>
+                  </li>
+
+                  <li class="list-inline-item">
+                    <a href="LINK_YOUTUBE" target="_blank">
+                      <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-youtube fa-stack-1x fa-inverse footer-icon"></i>
+                      </span>
+                    </a>
+                  </li>
+
+                </ul>
+
+                <div class="copyright text-center" role="note">
+                    Copyright &copy; SITE_TITLE 2020
+                </div>
+                <div class="copyright text-center" role="note">
+                    SITE_FOOTER
+                </div>
+
+              </div>
+            </div>
+          </div>
+      </footer>
+
+
+      <!-- bootstrap core -->
+      <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <!-- script for the base site -->
+      <script src="{% static 'js/clean-blog.min.js' %}"></script>
+      <!-- script for the code syntax blocks -->
+      <script src="{% static 'js/prism.js' %}"></script>
+
+    </body>
+
+
+</html>
