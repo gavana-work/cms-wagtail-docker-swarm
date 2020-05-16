@@ -11,15 +11,16 @@ system | Server deployment scripts
 
 # Example Site
 
-Below are some screenshots of the general look of each page type.
+Below are some screenshots of the general look of this project.
 Bootstrap 4 and the Bootstrap template Clean Blog is used as the base styling, but Clean Blog has been tweaked alot.
-![Content Page](https://github.com/gavin-hutchinson/wagtail-docker-deployment/app-pics/home.jpg)
-![Blog Index Page](https://github.com/gavin-hutchinson/wagtail-docker-deployment/app-pics/blog.jpg)
-![Info Index Page](https://github.com/gavin-hutchinson/wagtail-docker-deployment/app-pics/info.jpg)
-![Contact Page](https://github.com/gavin-hutchinson/wagtail-docker-deployment/app-pics/contact.jpg)
-![Menu on Smaller Screens 1](https://github.com/gavin-hutchinson/wagtail-docker-deployment/app-pics/menu-1.jpg)
-![Menu on Smaller Screens 2](https://github.com/gavin-hutchinson/wagtail-docker-deployment/menu-2.jpg)
 
+![Content Page](https://github.com/gavin-hutchinson/wagtail-docker-deployment/blob/master/app-pics/home.jpg)
+
+![Blog Index Page](https://github.com/gavin-hutchinson/wagtail-docker-deployment/blob/master/app-pics/blog.jpg)
+
+![Info Index Page](https://github.com/gavin-hutchinson/wagtail-docker-deployment/blob/master/app-pics/info.jpg)
+
+![Contact Page](https://github.com/gavin-hutchinson/wagtail-docker-deployment/blob/master/app-pics/contact.jpg)
 
 # Docker Images
 
