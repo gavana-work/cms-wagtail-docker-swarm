@@ -277,7 +277,7 @@ The script is simple and does the following:
 
 The cronjob command is below, adjust the timing and user, copy it and then add the cronjob by running `crontab -e`. Notice a log has been specified.
 ```
-0 4 * * 0 source /home/user/.bash_profile; /opt/docker-stacks/blog/system/scripts/exec-certbot-renew.sh >> /opt/docker-stacks/blog/system/logs/certbot.log 2>&1
+0 4 * * 0 source /home/user/.profile; /opt/docker-stacks/blog/system/scripts/exec-certbot-renew.sh >> /opt/docker-stacks/blog/system/logs/certbot.log 2>&1
 ```
 For the first run of the script you can edit the command to add `--dry-run` to confirm renewal will be okay.
 
@@ -291,8 +291,8 @@ Edit `exec-system.backup-cleaning.sh` to specify how many backups to choose. It 
 
 To go along with these two scripts there are two cronjobs. Adjust the timing and user as necessary.
 ```
-30 2 * * * source /home/user/.bash_profile; /opt/docker-stacks/blog/system/scripts/exec-system-backup.sh 2> /dev/null
-30 3 * * * source /home/user/.bash_profile; /opt/docker-stacks/blog/system/scripts/exec-system-backup-cleaning.sh 2> /dev/null
+30 2 * * * source /home/user/.profile; /opt/docker-stacks/blog/system/scripts/exec-system-backup.sh 2> /dev/null
+30 3 * * * source /home/user/.profile; /opt/docker-stacks/blog/system/scripts/exec-system-backup-cleaning.sh 2> /dev/null
 ```
 
 # Optional Instruction - Customizing the Footer and Menu

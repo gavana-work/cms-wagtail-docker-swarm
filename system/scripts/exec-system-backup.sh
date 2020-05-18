@@ -4,7 +4,7 @@
 ##################
 
 #export all persistant files of the blog stack
-#30 2 * * * source /home/user/.bash_profile; /opt/docker-stacks/blog/system/scripts/exec-system-backup.sh 2> /dev/null
+#30 2 * * * source /home/user/.profile; /opt/docker-stacks/blog/system/scripts/exec-system-backup.sh 2> /dev/null
 
 #configuration
 ##################

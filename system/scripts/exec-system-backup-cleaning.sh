@@ -4,7 +4,7 @@
 ##################
 
 #maintains BACKUP_RETENTION quantity of system backups
-#30 3 * * * source /home/user/.bash_profile; /opt/docker-stacks/blog/system/scripts/exec-system-backup-cleaning.sh 2> /dev/null
+#30 3 * * * source /home/user/.profile; /opt/docker-stacks/blog/system/scripts/exec-system-backup-cleaning.sh 2> /dev/null
 
 #configuration
 ##################
