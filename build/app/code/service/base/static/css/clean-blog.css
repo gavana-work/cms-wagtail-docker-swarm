@@ -191,7 +191,7 @@ header.masthead .overlay {
   height: 100%;
   width: 100%;
   background-color: #212529;
-  opacity: 0.5;
+  opacity: 0.15;
 }
 
 header.masthead .page-heading,
@@ -410,14 +410,14 @@ footer .copyright {
 }
 
 .btn-primary {
-  background-color: #27AE61;
-  border-color: #27AE61;
+  background-color: #30737b;
+  border-color: #30737b;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
   color: #fefdfa;
-  background-color: #27AE61 !important;
-  border-color: #27AE61 !important;
+  background-color: #30737b !important;
+  border-color: #30737b !important;
 }
 
 .btn-lg {
@@ -530,7 +530,7 @@ hr {
 .pagination > .active > a
 {
     color: #fefdfa;
-    background-color: #27AE61 !Important;
+    background-color: #30737b !Important;
     border: solid 2px #333436 !Important;
 }
 
