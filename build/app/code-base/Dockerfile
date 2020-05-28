@@ -46,6 +46,7 @@ RUN set -ex \
         libpq-dev \
         netcat-openbsd \
         iputils-ping \
+        libmagickwand-dev \
     " \
     && apt-get install -y --no-install-recommends $BUILD_DEPS
 
