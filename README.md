@@ -311,5 +311,8 @@ Look into glyphcons to find the right icons for your needs.
   * Build the `fe-custom` image with your edited conf file or map it in by adding a volume entry under **fe** service in the compose file.
     `- "/home/gavin/Desktop/projects/blog/persistance/fe/conf/nginx.conf:/etc/nginx/nginx.conf"`
 * To have the best cropping of your images these are the ideal dimensions
-  * headers - **width 1000px / height 700px**
+  * headers - **width 1910px / height 510px**
   * image streamfield blocks - **width 878px / height 590px**
+* Notes regarding gif files
+  * gif uploads are supported but Wagtail processing can be resource intensive upon initial upload
+  * gif files should be under 4MB
