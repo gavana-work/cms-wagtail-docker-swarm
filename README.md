@@ -32,7 +32,7 @@ postgres-custom | postgres:12.0 | database instance for Django
 redis-custom | redis:5.0.8 | cache for Django
 smtp-custom | alpine:3.10 | mail relay for Django
 
-- To follow best practive each image is built to run as a **non-root** user.
+- To follow best practice each image is built to run as a **non-root** user.
 - To follow best practice each image supports Docker secrets.
 - The **wagtail-custom** image is split into 2 Dockerfiles in case you would like to tweak and test the application code to suite your needs.
   - Dockerfile 1, application requirements which takes some time to build
