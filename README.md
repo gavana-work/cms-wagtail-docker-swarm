@@ -71,10 +71,7 @@ cd build/cache
 cd build/mail
 ./build-image.sh
 ```
-```sh
-cd build/app/code-base
-./build-image.sh
-```
+
 ```sh
 cd build/app
 ./build-image.sh
