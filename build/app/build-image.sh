@@ -26,4 +26,5 @@ echo
 echo
 echo "[building new app image]"
 echo
+	cd ..
 	docker build -t wagtail-custom .
