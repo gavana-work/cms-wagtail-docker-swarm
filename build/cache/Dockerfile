@@ -14,7 +14,7 @@ ARG APP_GROUP=redis
 ###################################################
 USER root
 
-#modify user/group of existing nginx user
+#modify user/group of existing user
 ###################################################
 RUN usermod -u "$APP_UID" "$APP_USER" && \   
     groupmod -g "$APP_GID" "$APP_GROUP"
