@@ -306,7 +306,7 @@ Look into glyphcons to find the right icons for your needs.
 * Port 80 is exposed becaused nginx redirects http to https.
 * `persistance/fe/conf/nginx.conf` can be edited to suite your needs but the default state will get an A+ on SSL Labs.
   * Build the `fe-custom` image with your edited conf file or map it in by adding a volume entry under **fe** service in the compose file.
-    `- "/home/gavin/Desktop/projects/blog/persistance/fe/conf/nginx.conf:/etc/nginx/nginx.conf"`
+    `- "/opt/docker-stacks/blog/persistance/fe/conf/nginx.conf:/etc/nginx/nginx.conf"`
 * To have the best cropping of your images these are the ideal dimensions
   * headers - **width 1910px / height 510px**
   * image streamfield blocks - **width 878px / height 590px**
