@@ -44,35 +44,18 @@ export UWSGI_WSGI_FILE
 
 sed -i.bak 's^SITE_TITLE^'"$SITE_TITLE"'^' $BASE_HTML_FILE
 sed -i.bak 's^SITE_FOOTER^'"$SITE_FOOTER"'^' $BASE_HTML_FILE
-sed -i.bak 's^A_SITE_NAV_SLUG^'"$A_SITE_NAV_SLUG"'^' $BASE_HTML_FILE
-sed -i.bak 's^A_SITE_NAV_TITLE^'"$A_SITE_NAV_TITLE"'^' $BASE_HTML_FILE
-sed -i.bak 's^B_SITE_NAV_SLUG^'"$B_SITE_NAV_SLUG"'^' $BASE_HTML_FILE
-sed -i.bak 's^B_SITE_NAV_TITLE^'"$B_SITE_NAV_TITLE"'^' $BASE_HTML_FILE
-sed -i.bak 's^C_SITE_NAV_SLUG^'"$C_SITE_NAV_SLUG"'^' $BASE_HTML_FILE
-sed -i.bak 's^C_SITE_NAV_TITLE^'"$C_SITE_NAV_TITLE"'^' $BASE_HTML_FILE
-sed -i.bak 's^D_SITE_NAV_SLUG^'"$D_SITE_NAV_SLUG"'^' $BASE_HTML_FILE
-sed -i.bak 's^D_SITE_NAV_TITLE^'"$D_SITE_NAV_TITLE"'^' $BASE_HTML_FILE
-sed -i.bak 's^E_SITE_NAV_SLUG^'"$E_SITE_NAV_SLUG"'^' $BASE_HTML_FILE
-sed -i.bak 's^E_SITE_NAV_TITLE^'"$E_SITE_NAV_TITLE"'^' $BASE_HTML_FILE
 sed -i.bak 's^LINK_GITHUB^'"$LINK_GITHUB"'^' $BASE_HTML_FILE
+sed -i.bak 's^LINK_INSTAGRAM^'"$LINK_INSTAGRAM"'^' $BASE_HTML_FILE
 sed -i.bak 's^LINK_TELEGRAM^'"$LINK_TELEGRAM"'^' $BASE_HTML_FILE
 sed -i.bak 's^LINK_YOUTUBE^'"$LINK_YOUTUBE"'^' $BASE_HTML_FILE
 
 sed -i.bak 's^SITE_TITLE^'"$SITE_TITLE"'^' $BASE_DEFAULT_HTML_FILE
 sed -i.bak 's^SITE_FOOTER^'"$SITE_FOOTER"'^' $BASE_DEFAULT_HTML_FILE
-sed -i.bak 's^A_SITE_NAV_SLUG^'"$A_SITE_NAV_SLUG"'^' $BASE_DEFAULT_HTML_FILE
-sed -i.bak 's^A_SITE_NAV_TITLE^'"$A_SITE_NAV_TITLE"'^' $BASE_DEFAULT_HTML_FILE
-sed -i.bak 's^B_SITE_NAV_SLUG^'"$B_SITE_NAV_SLUG"'^' $BASE_DEFAULT_HTML_FILE
-sed -i.bak 's^B_SITE_NAV_TITLE^'"$B_SITE_NAV_TITLE"'^' $BASE_DEFAULT_HTML_FILE
-sed -i.bak 's^C_SITE_NAV_SLUG^'"$C_SITE_NAV_SLUG"'^' $BASE_DEFAULT_HTML_FILE
-sed -i.bak 's^C_SITE_NAV_TITLE^'"$C_SITE_NAV_TITLE"'^' $BASE_DEFAULT_HTML_FILE
-sed -i.bak 's^D_SITE_NAV_SLUG^'"$D_SITE_NAV_SLUG"'^' $BASE_DEFAULT_HTML_FILE
-sed -i.bak 's^D_SITE_NAV_TITLE^'"$D_SITE_NAV_TITLE"'^' $BASE_DEFAULT_HTML_FILE
-sed -i.bak 's^E_SITE_NAV_SLUG^'"$E_SITE_NAV_SLUG"'^' $BASE_DEFAULT_HTML_FILE
-sed -i.bak 's^E_SITE_NAV_TITLE^'"$E_SITE_NAV_TITLE"'^' $BASE_DEFAULT_HTML_FILE
 sed -i.bak 's^LINK_GITHUB^'"$LINK_GITHUB"'^' $BASE_DEFAULT_HTML_FILE
+sed -i.bak 's^LINK_INSTAGRAM^'"$LINK_INSTAGRAM"'^' $BASE_DEFAULT_HTML_FILE
 sed -i.bak 's^LINK_TELEGRAM^'"$LINK_TELEGRAM"'^' $BASE_DEFAULT_HTML_FILE
 sed -i.bak 's^LINK_YOUTUBE^'"$LINK_YOUTUBE"'^' $BASE_HTML_FILE
+
 
 echo "[INFO] environment set"
 
@@ -93,15 +76,6 @@ while ! nc -z ${DJANGO_CACHE_HOST} ${DJANGO_CACHE_PORT}; do
   sleep 0.1
 done
 echo "[INFO] cache is online"
-
-#wait for the mail
-########################################################################
-
-while ! nc -z ${DJANGO_EMAIL_HOST} ${DJANGO_EMAIL_PORT}; do 
-  echo "[INFO] mail is offline - sleep 10ms"
-  sleep 0.1
-done
-echo "[INFO] mail is online"
 
 #prepare the webserver
 ########################################################################

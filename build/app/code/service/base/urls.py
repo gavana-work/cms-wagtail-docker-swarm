@@ -16,8 +16,7 @@ handler404 = 'default.views.handler404'
 handler500 = 'default.views.handler500'
 
 urlpatterns = [
-    url(r'^django-admin/', admin.site.urls),
-    url(r'^admin/', include(wagtailadmin_urls)),
+    url(r'^wagmin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
 ]
 urlpatterns += [ 

@@ -1,0 +1,12 @@
+{% load menu_tags %}
+<div class="collapse navbar-collapse" id="navbarResponsive">
+  <ul class="navbar-nav  ml-auto">
+  {% for item in menu_items %}
+      <li class="nav-item">
+          <a href="{{ item.href }}" class="nav-link" >
+            {{ item.text }}
+          </a>
+      </li>
+  {% endfor %}
+  </ul>
+</div>

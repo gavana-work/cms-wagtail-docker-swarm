@@ -48,6 +48,13 @@ CACHES = {
     }
 }
 
+#emailing
+######################
+EMAIL_USER = os.environ["DJANGO_EMAIL_USER"]
+EMAIL_HOST = os.environ["DJANGO_EMAIL_HOST"]
+EMAIL_PORT = os.environ["DJANGO_EMAIL_PORT"]
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 #file-serving
 ######################
 #serving files via nginx - the following urls and directories are shared config for nginx.conf
@@ -63,13 +70,6 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = (
     os.path.join(PROJECT_DIR, 'static'),
 )
-
-#emailing
-######################
-EMAIL_USER = os.environ["DJANGO_EMAIL_USER"]
-EMAIL_HOST = os.environ["DJANGO_EMAIL_HOST"]
-EMAIL_PORT = os.environ["DJANGO_EMAIL_PORT"]
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 #search
 ######################

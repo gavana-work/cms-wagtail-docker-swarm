@@ -1,6 +1,6 @@
 #set the source image
 ###################################################
-FROM nginx:1.17.9
+FROM nginx:1.19.8
 LABEL maintainer="gavin"
 
 #set vars, build time

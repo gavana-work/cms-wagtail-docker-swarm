@@ -26,7 +26,7 @@ Bootstrap 4 and the Bootstrap template Clean Blog is used as the base styling, b
 
 Image | Base | Usage
 ------------ | ------------- | ------------- 
-fe-custom | nginx:1.17.9 | frontend reverse proxy for Django
+fe-custom | nginx:1.19.8 | frontend reverse proxy for Django
 wagtail-custom | python:3.8-slim | Django with the Wagtail CMS
 postgres-custom | postgres:12.0 | database instance for Django
 redis-custom | redis:5.0.8 | cache for Django
@@ -34,10 +34,6 @@ smtp-custom | alpine:3.10 | mail relay for Django
 
 - To follow best practice each image is built to run as a **non-root** user.
 - To follow best practice each image supports Docker secrets.
-- The **wagtail-custom** image is split into 2 Dockerfiles in case you would like to tweak and test the application code to suite your needs.
-  - Dockerfile 1, application requirements which takes some time to build
-  - Dockerfile 2, application code which has a quick build time
-
 
 # Instructions
 Assuming you have Docker installed, Docker Swarm initialized and you're not using Windows to host Docker - do the following.
@@ -54,27 +50,31 @@ vi build/mail/Dockerfile
 vi build/app/Dockerfile
 ```
 
-Build each image.
+Build each image all at once.
+```sh
+cd build
+./build.sh
+```
+Or build individually.
 ```sh
 cd build/fe
-./build-image.sh
+./build.sh
 ```
 ```sh
 cd build/db
-./build-image.sh
+./build.sh
 ```
 ```sh
 cd build/cache 
-./build-image.sh
+./build.sh
 ```
 ```sh
 cd build/mail
-./build-image.sh
+./build.sh
 ```
-
 ```sh
 cd build/app
-./build-image.sh
+./build.sh
 ```
 
 ### Prepare Server Files
@@ -92,6 +92,8 @@ deploy
 persistance
 system
 ```
+
+Use the script under the `persistance` folder to make the necessary folders - `mkdir.sh`
 
 ### Create Certificates
 
@@ -153,27 +155,19 @@ echo -n "emailpassword" | docker secret create SMTP_PASSWORD -
 
 ### Edit Compose File
 
+
+
 This variable controls whether the Nginx logs will be preserved across container restarts.
 ```yaml
 x-fe-environment: &fe-environment
   LOG_RETENTION: "false"
 ```
 
-This section refers to application settings. Instead of using a menu management pacakge and templatetags, I have implemented search and replace in the startup of the **wagtail-custom** container for these values.
+This section refers to application settings.
 ```yaml
 x-app-environment: &app-environment
   SITE_TITLE: "My Site"
   SITE_FOOTER: 'Thanks for checking out My Site. Maybe consider visiting some of my social media accounts for more good stuff.'
-  A_SITE_NAV_SLUG: "home"
-  A_SITE_NAV_TITLE: "Home"
-  B_SITE_NAV_SLUG: "blog"
-  B_SITE_NAV_TITLE: "Blog"
-  C_SITE_NAV_SLUG: "archive"
-  C_SITE_NAV_TITLE: "Archive"
-  D_SITE_NAV_SLUG: "resume"
-  D_SITE_NAV_TITLE: "Resume"
-  E_SITE_NAV_SLUG: "contact"
-  E_SITE_NAV_TITLE: "Contact"
   LINK_GITHUB: "https://github.com"
   LINK_TELEGRAM: "https://telegram.org/"
   LINK_YOUTUBE: "https://youtube.com"
@@ -224,7 +218,7 @@ resources:
 
 Ensure the following files are in place. Every other unamed volume is an empty folder for logs or data.
 ```sh
-persistance/app/img/error-page.jpg #this is displaying 403,404,500,etc
+persistance/app/img/error-page.jpg #this is display upon 403,404,500 errors
 persistance/app/img/favicon.ico #this is the icon displayed in the browser tab
 ```
 
@@ -292,9 +286,9 @@ To go along with these two scripts there are two cronjobs. Adjust the timing and
 30 3 * * * source /home/user/.profile; /opt/docker-stacks/blog/system/scripts/exec-system-backup-cleaning.sh 2> /dev/null
 ```
 
-# Optional Instruction - Customizing the Footer and Menu
+# Optional Instruction - Customizing the Footer
 
-You can edit 4 files to add/remove menu items and footer items.
+You can edit these 4 files to add/remove footer items.
 1. Add or remove an environment variable from `deploy/docker-compose.yml` for either the menu or footer.
 1. Add or remove replacement commands from `build/app/code/service-init/run.sh` and rebuild the app image.
 1. Add or remove a navigation or footer chunk from `build/app/code/service/base/templates/base.html` and `build/app/code/service/base/templates/base-default.html`
@@ -304,7 +298,7 @@ Look into glyphcons to find the right icons for your needs.
 # Additional Notes
 
 * Port 80 is exposed becaused nginx redirects http to https.
-* `persistance/fe/conf/nginx.conf` can be edited to suite your needs but the default state will get an A+ on SSL Labs.
+* `build/fe/code/service-init/nginx.conf` can be edited to suite your needs but the default state will get an A+ on SSL Labs.
   * Build the `fe-custom` image with your edited conf file or map it in by adding a volume entry under **fe** service in the compose file.
     `- "/opt/docker-stacks/blog/persistance/fe/conf/nginx.conf:/etc/nginx/nginx.conf"`
 * To have the best cropping of your images these are the ideal dimensions
@@ -313,3 +307,4 @@ Look into glyphcons to find the right icons for your needs.
 * Notes regarding gif files
   * gif uploads are supported but Wagtail processing can be resource intensive upon initial upload
   * gif files should be under 4MB
+* This project supports wagtailmenus, see their documentation for creating a menu in the Wagtail UI.

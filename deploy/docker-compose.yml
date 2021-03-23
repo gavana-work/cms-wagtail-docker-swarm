@@ -120,18 +120,8 @@ x-fe-environment: &fe-environment
 x-app-environment: &app-environment
   SITE_TITLE: "My Site"
   SITE_FOOTER: 'Thanks for checking out My Site. Maybe consider visiting some of my social media accounts for more good stuff.'
-  A_SITE_NAV_SLUG: "home"
-  A_SITE_NAV_TITLE: "Home"
-  B_SITE_NAV_SLUG: "blog"
-  B_SITE_NAV_TITLE: "Blog"
-  C_SITE_NAV_SLUG: "archive"
-  C_SITE_NAV_TITLE: "Archive"
-  D_SITE_NAV_SLUG: "resume"
-  D_SITE_NAV_TITLE: "Resume"
-  E_SITE_NAV_SLUG: "contact"
-  E_SITE_NAV_TITLE: "Contact"
   LINK_GITHUB: "https://github.com"
-  LINK_TELEGRAM: "https://telegram.org/"
+  LINK_TELEGRAM: "https://telegram.org"
   LINK_YOUTUBE: "https://youtube.com"
 
 x-mail-environment: &mail-environment

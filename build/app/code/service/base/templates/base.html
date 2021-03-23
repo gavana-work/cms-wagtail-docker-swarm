@@ -1,4 +1,4 @@
-{% load static wagtailcore_tags wagtailimages_tags blogapp_tags infoapp_tags el_pagination_tags %}
+{% load static wagtailcore_tags wagtailimages_tags blogapp_tags infoapp_tags el_pagination_tags menu_tags %}
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -43,35 +43,13 @@
       <!-- navigation menu -->
       <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
         <div class="container">
-          <a class="navbar-brand">SITE_TITLE</a>
+          <a class="navbar-brand" href="{% slugurl 'home' %}">SITE_TITLE</a>
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
           </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              
-              <li class="nav-item">
-                <a class="nav-link" href="{% slugurl 'A_SITE_NAV_SLUG' %}">A_SITE_NAV_TITLE</a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link" href="{% slugurl 'B_SITE_NAV_SLUG' %}">B_SITE_NAV_TITLE</a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link" href="{% slugurl 'C_SITE_NAV_SLUG' %}">C_SITE_NAV_TITLE</a>
-              </li>
 
-              <li class="nav-item">
-                <a class="nav-link" href="{% slugurl 'D_SITE_NAV_SLUG' %}">D_SITE_NAV_TITLE</a>
-              </li>
+              {% main_menu template="menu/main_menu.html" %}
 
-              <li class="nav-item">
-                <a class="nav-link" href="{% slugurl 'E_SITE_NAV_SLUG' %}">E_SITE_NAV_TITLE</a>
-              </li>
-
-            </ul>
-          </div>
         </div>
       </nav>
 
@@ -102,6 +80,15 @@
                   </li>
 
                   <li class="list-inline-item">
+                    <a href="LINK_INSTAGRAM" target="_blank">
+                      <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fab fa-instagram fa-stack-1x fa-inverse footer-icon"></i>
+                      </span>
+                    </a>
+                  </li>
+
+                  <li class="list-inline-item">
                     <a href="LINK_TELEGRAM" target="_blank">
                       <span class="fa-stack fa-lg">
                         <i class="fa fa-circle fa-stack-2x"></i>
@@ -109,7 +96,8 @@
                       </span>
                     </a>
                   </li>
-
+                  
+                  <!--
                   <li class="list-inline-item">
                     <a href="LINK_YOUTUBE" target="_blank">
                       <span class="fa-stack fa-lg">
@@ -118,6 +106,7 @@
                       </span>
                     </a>
                   </li>
+                  -->
 
                 </ul>
 
